@@ -168,9 +168,7 @@
     });
     
     const instructions = document.createElement('div');
-    instructions.className = 'instructions';
-    instructions.textContent = 'Используйте стрелки на клавиатуре или свайпы на мобильном устройстве для перемещения плиток';
-    
+   
     leaderboardContent.appendChild(leaderboardTitle);
     leaderboardContent.appendChild(leaderboardTable);
     leaderboardContent.appendChild(closeLeaderboardBtn);
