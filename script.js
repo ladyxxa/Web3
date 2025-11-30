@@ -1,5 +1,5 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
-    // Основные переменные
+   
     const gridSize = 4;
     let grid = [];
     let score = 0;
@@ -9,15 +9,14 @@
     let history = [];
     let touchStartX, touchStartY, touchEndX, touchEndY;
     
-    // Создание DOM элементов
+   
     const body = document.body;
     
-    // Создание контейнера
+   
     const container = document.createElement('div');
     container.className = 'container';
     body.appendChild(container);
-    
-    // Создание заголовка и счета
+   
     const header = document.createElement('div');
     header.className = 'header';
     
@@ -42,7 +41,7 @@
     header.appendChild(scoreContainer);
     container.appendChild(header);
     
-    // Создание кнопок управления
+   
     const controls = document.createElement('div');
     controls.className = 'controls';
     
@@ -66,14 +65,14 @@
     controls.appendChild(leaderboardBtn);
     container.appendChild(controls);
     
-    // Создание игрового поля
+   
     const gameContainer = document.createElement('div');
     gameContainer.className = 'game-container';
     
     const gridElement = document.createElement('div');
     gridElement.className = 'grid';
     
-    // Создание ячеек сетки
+    
     for (let i = 0; i < gridSize * gridSize; i++) {
         const cell = document.createElement('div');
         cell.className = 'grid-cell';
@@ -82,7 +81,7 @@
     
     gameContainer.appendChild(gridElement);
     
-    // Создание сообщения о конце игры
+   
     const gameMessage = document.createElement('div');
     gameMessage.className = 'game-message';
     
@@ -120,7 +119,7 @@
     gameContainer.appendChild(gameMessage);
     container.appendChild(gameContainer);
     
-    // Создание таблицы лидеров
+    
     const leaderboard = document.createElement('div');
     leaderboard.className = 'leaderboard';
     
@@ -132,7 +131,7 @@
     
     const leaderboardTable = document.createElement('table');
     
-    // Создание заголовка таблицы без innerHTML
+    
     const tableHead = document.createElement('thead');
     const headerRow = document.createElement('tr');
     
@@ -177,7 +176,7 @@
     leaderboard.appendChild(leaderboardContent);
     body.appendChild(leaderboard);
     
-    // Инициализация игры
+    
     function initGame() {
         grid = Array(gridSize).fill().map(() => Array(gridSize).fill(0));
         score = 0;
@@ -192,17 +191,17 @@
         addRandomTile();
         updateGrid();
         
-        // Сохранение состояния
+        
         saveGameState();
     }
     
-    // Очистка игрового поля
+    
     function clearGrid() {
         const tiles = document.querySelectorAll('.tile');
         tiles.forEach(tile => tile.remove());
     }
     
-    // Обновление отображения игрового поля
+   
     function updateGrid() {
         clearGrid();
         
@@ -213,7 +212,7 @@
                     tile.className = `tile tile-${grid[row][col]}`;
                     tile.textContent = grid[row][col];
                     
-                    // Позиционирование плитки
+                   
                     const cellSize = gridElement.offsetWidth / gridSize;
                     tile.style.width = `${cellSize - 10}px`;
                     tile.style.height = `${cellSize - 10}px`;
@@ -226,7 +225,6 @@
         }
     }
     
-    // Добавление случайной плитки
     function addRandomTile() {
         const emptyCells = [];
         
@@ -244,7 +242,6 @@
         }
     }
     
-    // Сохранение состояния игры
     function saveGameState() {
         const gameState = {
             grid: JSON.parse(JSON.stringify(grid)),
@@ -255,7 +252,6 @@
         localStorage.setItem('game2048', JSON.stringify(gameState));
     }
     
-    // Загрузка состояния игры
     function loadGameState() {
         const savedState = localStorage.getItem('game2048');
         
@@ -272,20 +268,19 @@
         }
     }
     
-    // Обновление счета
     function updateScore() {
         scoreElement.textContent = score;
     }
     
-    // Движение влево
+    
     function moveLeft() {
         moved = false;
         
         for (let row = 0; row < gridSize; row++) {
-            // Сжатие ряда
+            
             const newRow = grid[row].filter(cell => cell !== 0);
             
-            // Слияние одинаковых плиток
+            
             for (let i = 0; i < newRow.length - 1; i++) {
                 if (newRow[i] === newRow[i + 1]) {
                     newRow[i] *= 2;
@@ -295,7 +290,7 @@
                 }
             }
             
-            // Заполнение нулями
+          
             while (newRow.length < gridSize) {
                 newRow.push(0);
             }
@@ -310,26 +305,25 @@
         return moved;
     }
     
-    // Движение вправо
+    
     function moveRight() {
         moved = false;
         
         for (let row = 0; row < gridSize; row++) {
-            // Сжатие ряда
+            
             const newRow = grid[row].filter(cell => cell !== 0);
             
-            // Слияние одинаковых плиток
             for (let i = newRow.length - 1; i > 0; i--) {
                 if (newRow[i] === newRow[i - 1]) {
                     newRow[i] *= 2;
                     score += newRow[i];
                     newRow.splice(i - 1, 1);
                     moved = true;
-                    i--; // Пропустить следующую плитку, так как она была объединена
+                    i--; 
                 }
             }
             
-            // Заполнение нулями слева
+           
             while (newRow.length < gridSize) {
                 newRow.unshift(0);
             }
@@ -344,12 +338,12 @@
         return moved;
     }
     
-    // Движение вверх
+    
     function moveUp() {
         moved = false;
         
         for (let col = 0; col < gridSize; col++) {
-            // Сжатие колонки
+            
             const column = [];
             for (let row = 0; row < gridSize; row++) {
                 if (grid[row][col] !== 0) {
@@ -357,7 +351,7 @@
                 }
             }
             
-            // Слияние одинаковых плиток
+            
             for (let i = 0; i < column.length - 1; i++) {
                 if (column[i] === column[i + 1]) {
                     column[i] *= 2;
@@ -367,12 +361,11 @@
                 }
             }
             
-            // Заполнение нулями снизу
             while (column.length < gridSize) {
                 column.push(0);
             }
             
-            // Проверка на изменение
+           
             for (let row = 0; row < gridSize; row++) {
                 if (grid[row][col] !== column[row]) {
                     moved = true;
@@ -384,12 +377,12 @@
         return moved;
     }
     
-    // Движение вниз
+   
     function moveDown() {
         moved = false;
         
         for (let col = 0; col < gridSize; col++) {
-            // Сжатие колонки
+            
             const column = [];
             for (let row = 0; row < gridSize; row++) {
                 if (grid[row][col] !== 0) {
@@ -397,23 +390,22 @@
                 }
             }
             
-            // Слияние одинаковых плиток
+            
             for (let i = column.length - 1; i > 0; i--) {
                 if (column[i] === column[i - 1]) {
                     column[i] *= 2;
                     score += column[i];
                     column.splice(i - 1, 1);
                     moved = true;
-                    i--; // Пропустить следующую плитку, так как она была объединена
+                    i--; 
                 }
             }
             
-            // Заполнение нулями сверху
             while (column.length < gridSize) {
                 column.unshift(0);
             }
             
-            // Проверка на изменение
+           
             for (let row = 0; row < gridSize; row++) {
                 if (grid[row][col] !== column[row]) {
                     moved = true;
@@ -425,9 +417,8 @@
         return moved;
     }
     
-    // Проверка возможности движения
+   
     function canMove() {
-        // Проверка наличия пустых ячеек
         for (let row = 0; row < gridSize; row++) {
             for (let col = 0; col < gridSize; col++) {
                 if (grid[row][col] === 0) {
@@ -436,7 +427,7 @@
             }
         }
         
-        // Проверка возможности слияния по горизонтали
+        
         for (let row = 0; row < gridSize; row++) {
             for (let col = 0; col < gridSize - 1; col++) {
                 if (grid[row][col] === grid[row][col + 1]) {
@@ -445,7 +436,7 @@
             }
         }
         
-        // Проверка возможности слияния по вертикали
+       
         for (let col = 0; col < gridSize; col++) {
             for (let row = 0; row < gridSize - 1; row++) {
                 if (grid[row][col] === grid[row + 1][col]) {
@@ -457,11 +448,11 @@
         return false;
     }
     
-    // Обработка движения
+   
     function handleMove(direction) {
         if (gameOver) return;
         
-        // Сохранение состояния перед ходом
+        
         const prevState = {
             grid: JSON.parse(JSON.stringify(grid)),
             score: score
@@ -485,10 +476,8 @@
         }
         
         if (moved) {
-            // Добавление в историю
             history.push(prevState);
-            
-            // Ограничение истории (максимум 10 ходов назад)
+           
             if (history.length > 10) {
                 history.shift();
             }
@@ -498,7 +487,7 @@
             updateGrid();
             saveGameState();
             
-            // Проверка на победу
+            
             if (!gameWon) {
                 for (let row = 0; row < gridSize; row++) {
                     for (let col = 0; col < gridSize; col++) {
@@ -510,7 +499,7 @@
                 }
             }
             
-            // Проверка на окончание игры
+            
             if (!canMove()) {
                 gameOver = true;
                 showGameMessage('Игра окончена!', true);
@@ -518,7 +507,7 @@
         }
     }
     
-    // Отмена хода
+    
     function undoMove() {
         if (history.length > 0 && !gameOver) {
             const prevState = history.pop();
@@ -531,13 +520,13 @@
         }
     }
     
-    // Новая игра
+   
     function newGame() {
         gameMessage.classList.remove('active');
         initGame();
     }
     
-    // Показать сообщение о конце игры
+   
     function showGameMessage(message, isGameOver) {
         messageTitle.textContent = message;
         document.getElementById('final-score').textContent = score;
@@ -553,7 +542,7 @@
         gameMessage.classList.add('active');
     }
     
-    // Сохранение результата
+    
     function saveScore() {
         const name = nameInput.value.trim();
         
@@ -562,34 +551,33 @@
             return;
         }
         
-        // Получение текущих рекордов
+       
         const leaderboardData = JSON.parse(localStorage.getItem('leaderboard2048')) || [];
         
-        // Добавление нового рекорда
         leaderboardData.push({
             name: name,
             score: score,
             date: new Date().toLocaleDateString('ru-RU')
         });
         
-        // Сортировка по убыванию счета
+       
         leaderboardData.sort((a, b) => b.score - a.score);
         
-        // Ограничение до 10 лучших результатов
+       
         if (leaderboardData.length > 10) {
             leaderboardData.splice(10);
         }
         
-        // Сохранение в localStorage
+      
         localStorage.setItem('leaderboard2048', JSON.stringify(leaderboardData));
         
-        // Обновление интерфейса
+       
         nameInput.style.display = 'none';
         saveBtn.style.display = 'none';
         messageTitle.textContent = 'Ваш рекорд сохранен!';
     }
     
-    // Показать таблицу лидеров
+    
     function showLeaderboard() {
         const leaderboardBody = document.getElementById('leaderboard-body');
         leaderboardBody.innerHTML = '';
@@ -632,7 +620,7 @@
         leaderboard.classList.add('active');
     }
     
-    // Обработка событий клавиатуры
+   
     document.addEventListener('keydown', (e) => {
         if (gameOver && !gameMessage.classList.contains('active')) return;
         
@@ -652,7 +640,6 @@
         }
     });
     
-    // Обработка свайпов для мобильных устройств
     gameContainer.addEventListener('touchstart', (e) => {
         if (gameOver && !gameMessage.classList.contains('active')) return;
         
@@ -669,14 +656,13 @@
         handleSwipe();
     }, { passive: true });
     
-    // Обработка свайпов
     function handleSwipe() {
         const diffX = touchEndX - touchStartX;
         const diffY = touchEndY - touchStartY;
-        const minSwipeDistance = 30; // Минимальное расстояние для регистрации свайпа
+        const minSwipeDistance = 30; 
         
         if (Math.abs(diffX) > Math.abs(diffY)) {
-            // Горизонтальный свайп
+          
             if (Math.abs(diffX) > minSwipeDistance) {
                 if (diffX > 0) {
                     handleMove('right');
@@ -685,7 +671,7 @@
                 }
             }
         } else {
-            // Вертикальный свайп
+            
             if (Math.abs(diffY) > minSwipeDistance) {
                 if (diffY > 0) {
                     handleMove('down');
@@ -695,7 +681,6 @@
             }
         }
     }
-    
-    // Загрузка состояния игры при запуске
+   
     loadGameState();
 });
